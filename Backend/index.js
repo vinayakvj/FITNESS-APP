@@ -12,8 +12,8 @@ const app = express();
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 
-app.use("/workouts/goals", workroutes);
-app.use("/workouts/users", users);
+app.use("/fit/workouts", workroutes);
+app.use("/fit/users", users);
 
 app.listen(process.env.PORT, () => {
   console.log("Listening at port 3000");

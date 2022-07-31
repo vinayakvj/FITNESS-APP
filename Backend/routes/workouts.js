@@ -1,14 +1,12 @@
 const express = require("express");
-const {
-  getGoal,
-  postGoal,
-  deleteGoal,
-  setGoal,
-} = require("../controllers/goalController");
 
 const router = express.Router();
+const { createWorkout } = require("../controllers/workControl");
 
-router.route("/").get(getGoal).post(setGoal);
-router.route("/:id").put(postGoal).delete(deleteGoal);
+router.get("/", (req, res) => {
+  res.status(200).json({ meg: "Workout section." });
+});
+
+router.post("/", createWorkout);
 
 module.exports = router;
