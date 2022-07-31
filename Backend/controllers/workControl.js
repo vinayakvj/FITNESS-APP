@@ -1,4 +1,5 @@
 const express = require("express");
+const { default: mongoose } = require("mongoose");
 
 const Workout = require("../models/workmodel");
 const { all } = require("../routes/workouts");
@@ -40,4 +41,45 @@ const singleWorkout = async (req, res) => {
   }
 };
 
-module.exports = { createWorkout, getAllWorkouts, singleWorkout };
+// delete from workout database.
+const delwork = async (req, res) => {
+  const { id } = req.params;
+
+  if (!mongoose.Types.ObjectId.isValid(id)) {
+    return res.status(404).json({ error: "No such workout." });
+  }
+
+  const deletedwork = await Workout.findByIdAndDelete({ _id: id });
+
+  if (!deletedwork) {
+    res.json({ msg: "error in deleting." });
+  } else {
+    res.json(deletedwork);
+  }
+};
+
+// update a current workout
+const upWork = async (req, res) => {
+  const { id } = req.params;
+
+  const updatedWork = await Workout.findByIdAndUpdate(
+    { _id: id },
+    {
+      ...req.body,
+    }
+  );
+
+  if (!updatedWork) {
+    res.status(400).json({ msg: "not updated." });
+  } else {
+    res.status(200).json(updatedWork);
+  }
+};
+
+module.exports = {
+  createWorkout,
+  getAllWorkouts,
+  singleWorkout,
+  delwork,
+  upWork,
+};
