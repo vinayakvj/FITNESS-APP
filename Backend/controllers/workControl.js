@@ -13,7 +13,7 @@ const createWorkout = async (req, res) => {
       res.json({ msg: "data created" });
     });
   } catch {
-    res.status(404).json({ msg: "data not entered." });
+    res.status(404).json({ error: "data not entered." });
   }
 };
 
